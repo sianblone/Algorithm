@@ -1,62 +1,67 @@
 package com.java.test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
 
 public class Main {
 	
 	public static void main(String[] args) throws IOException {
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    
-		int N = 5;
-		int[] stages = {2, 1, 2, 6, 2, 4, 3, 3};
-		HashMap<Integer, Double> failureMap = new HashMap<>();
-		
-		for(int i = 0 ; i < N ; i++) {
-			int countArrival = 0;
-			int countFailure = 0;
-			
-			for(int j = 0 ; j < stages.length ; j++) {
-				// stages 배열[j]의 값이
-				// 현재 실패율 구하는 스테이지 번호 (i+1)과 같으면 n스테이지 도달 수, 실패 수 카운트 ++
-				// (인덱스는 0부터 시작이므로 실제로 1스테이지는 인덱스 0번에 저장된다)
-				if(stages[j] == i+1) {
-					countArrival++;
-					countFailure++;
-				} else if(stages[j] > i+1) {
-					// 현재 실패율 구하는 스테이지 번호보다 크면 도달 수 카운트 ++
-					countArrival++;
-				}
-			}
-			failureMap.put(i+1, (double)countFailure / (double)countArrival);
-		}
-		
-		List<Integer> keySetList = new ArrayList<>(failureMap.keySet());
-		
-		Collections.sort(keySetList, new Comparator<Integer>() {
-
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				if(failureMap.get(o1) < failureMap.get(o2)) {
-					return 1;
-				} else if (failureMap.get(o1) > failureMap.get(o2)) {
-					return -1;
-				}
-				return 0;
+		String s = "xababcdcdababcdcd";
+		solution(s);
+	}
+	
+	public static int solution(String s) {
+		int answer = Integer.MAX_VALUE;
+		// 나눌 단위
+		for(int leng = 1 ; leng <= s.length() / 2 ; leng++) {
+			String word = "";
+			String compress = "";
+			int count = 1;
+			String divide = "";
+			// 기준 단어
+			for(int i = 0 ; i < leng ; i++) {
+				divide += s.charAt(i);
 			}
 			
-		});
-		
-		int[] answer = new int[keySetList.size()];
-		for(int i = 0 ; i < keySetList.size() ; i++) {
-			answer[i] = keySetList.get(i);
+			// 새로운 인덱스
+			for(int i = 0 ; i < s.length() ; i += leng) {
+				word = "";
+				// 나눌 단어
+				for(int j = i ; j < i + leng ; j++) {
+					if(j >= s.length()) break;//마지막 나눌 단어의 길이가 나눌 단위보다 적을 경우
+					word += s.charAt(j);
+				}
+				
+				// 기준 단어와 나눌 단어가 같으면 단어 압축 카운트 증가
+				if(divide.equals(word)) {
+					count++;
+				} else {
+					// 기준 단어와 나눌 단어가 다르면 압축 카운트 + 기준 단어
+					if(count > 1) {
+						compress += count + divide;
+						count = 1;
+					} else {
+						// 압축 카운트가 1이면 +기준 단어만
+						compress += divide;
+					}
+					// 기준 단어 새로운 단어로 바꿔주기
+					divide = word;
+				}
+			}
+			
+			// 마지막엔 count++만 했으므로
+			if(count > 1) {
+				compress += count + divide;
+				count = 1;
+			} else {
+				compress += divide;
+			}
+			
+			int length = compress.length();
+			answer = answer > length ? length : answer;
 		}
+		
+		if(answer == Integer.MAX_VALUE) answer = 1;
+		
+		return answer;
 	}
 }
