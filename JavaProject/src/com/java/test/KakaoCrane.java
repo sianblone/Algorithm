@@ -31,7 +31,7 @@ public class KakaoCrane {
 			
 			System.out.println(moves[i] + "인형 상태 : " + dollList.toString() + "/ index : " + index);
 			// 인형리스트의 크기가 2 이상일 때
-			// 리스트 현재 값과 이전 값, 같은 번호면 인형 2개 지우기
+			// 리스트 현재 값과 이전 값을 비교하여 같은 번호면 인형 2개 지우기
 			if(dollList.size() > 1) {
 				if(dollList.get(index) == dollList.get(index-1)) {
 					dollList.remove(index);
