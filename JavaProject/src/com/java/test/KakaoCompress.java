@@ -18,7 +18,7 @@ public class KakaoCompress {
 			for(int i = 0 ; i <= s.length() / unit ; i++) {
 				
 			}
-		
+		}
 		return answer;
 	}
 }
