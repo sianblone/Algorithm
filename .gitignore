@@ -1,3 +1,7 @@
+target/
+Servers/
+
+# *.java 파일이 실행됐을 때 컴파일 된 파일
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -20,6 +24,8 @@ tmp/
 *.bak
 *.swp
 *~.nib
+local.properties
+.settings/
 .loadpath
 .recommenders
 
@@ -37,6 +43,9 @@ tmp/
 
 # Java annotation processor (APT)
 .factorypath
+
+# PDT-specific (PHP Development Tools)
+.buildpath
 
 # sbteclipse plugin
 .target
@@ -58,12 +67,6 @@ tmp/
 .scala_dependencies
 .worksheet
 RemoteSystemsTempFiles/
-
-*.class
-target/
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Logs
 logs
